@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import taras.nakonechnyi.mkr.chargingstations.dto.ChargingStationRating;
+import taras.nakonechnyi.mkr.chargingstations.dto.GetBestChargingStationDto;
 import taras.nakonechnyi.mkr.chargingstations.dto.SaveChargingStationDto;
 import taras.nakonechnyi.mkr.chargingstations.model.ChargingStation;
 import taras.nakonechnyi.mkr.chargingstations.service.ChargingStationService;
@@ -29,9 +30,14 @@ public class ChargingStationController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping
+    @GetMapping("/filter")
     public List<ChargingStation> getChargingStationsByClass(@RequestParam("className") String className) {
         return chargingStationService.getChargingStationsByClass(className);
+    }
+
+    @GetMapping("/best")
+    public List<ChargingStation> getBestChargingStations(@RequestBody GetBestChargingStationDto dto) {
+        return chargingStationService.getBestChargingStations(dto);
     }
 
     @PostMapping

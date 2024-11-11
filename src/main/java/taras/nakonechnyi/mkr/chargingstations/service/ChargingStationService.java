@@ -3,10 +3,12 @@ package taras.nakonechnyi.mkr.chargingstations.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import taras.nakonechnyi.mkr.chargingstations.dto.GetBestChargingStationDto;
 import taras.nakonechnyi.mkr.chargingstations.dto.SaveChargingStationDto;
 import taras.nakonechnyi.mkr.chargingstations.model.*;
 import taras.nakonechnyi.mkr.chargingstations.repository.*;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -40,6 +42,14 @@ public class ChargingStationService {
                 .orElseThrow(() -> new RuntimeException("Class not found"));
 
         return chargingStationRepository.findAllByStationClass(stationsClass);
+    }
+
+    public List<ChargingStation> getBestChargingStations(GetBestChargingStationDto getBestChargingStationDto) {
+        var stations = chargingStationRepository.findAll();
+
+        Collections.shuffle(stations);
+
+        return  stations.stream().limit(3).collect(Collectors.toList());
     }
 
     @Transactional
@@ -106,9 +116,6 @@ public class ChargingStationService {
                                 .manufacturerName(dto.getManufacturerName())
                                 .country(country)
                                 .build()));
-
-//        var parameter = parameterRepository.findById(chargingStation.getParameters().getId())
-//                .orElseThrow(() -> new RuntimeException("Parameter not fount"));
 
         var parameter = parameterRepository.save(Parameter.builder()
                 .id(chargingStation.getParameters().getId())
