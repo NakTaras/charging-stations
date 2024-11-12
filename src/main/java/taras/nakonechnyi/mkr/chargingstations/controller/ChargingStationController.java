@@ -20,6 +20,7 @@ public class ChargingStationController {
 
     private final ChargingStationService chargingStationService;
 
+    @CrossOrigin
     @GetMapping
     public List<ChargingStationRating> getAllChargingStations() {
         return chargingStationService.getAllChargingStations().entrySet().stream()
@@ -30,28 +31,33 @@ public class ChargingStationController {
                 .collect(Collectors.toList());
     }
 
+    @CrossOrigin
     @GetMapping("/filter")
     public List<ChargingStation> getChargingStationsByClass(@RequestParam("className") String className) {
         return chargingStationService.getChargingStationsByClass(className);
     }
 
+    @CrossOrigin
     @GetMapping("/best")
     public List<ChargingStation> getBestChargingStations(@RequestBody GetBestChargingStationDto dto) {
         return chargingStationService.getBestChargingStations(dto);
     }
 
+    @CrossOrigin
     @PostMapping
     public ResponseEntity<ChargingStation> addChargingStation(@RequestBody SaveChargingStationDto dto) {
         var chargingStation = chargingStationService.addChargingStation(dto);
         return new ResponseEntity<>(chargingStation, HttpStatus.CREATED);
     }
 
+    @CrossOrigin
     @PutMapping("/{id}")
     public ChargingStation updateChargingStation(@PathVariable("id") Integer id,
             @RequestBody SaveChargingStationDto dto) {
         return chargingStationService.updateChargingStation(id, dto);
     }
 
+    @CrossOrigin
     @DeleteMapping("/{id}")
     public void deleteChargingStation(@PathVariable("id") Integer id) {
         chargingStationService.deleteChargingStation(id);
