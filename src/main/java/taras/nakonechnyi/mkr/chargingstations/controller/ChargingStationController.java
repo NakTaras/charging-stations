@@ -38,7 +38,7 @@ public class ChargingStationController {
     }
 
     @CrossOrigin
-    @GetMapping("/best")
+    @PostMapping("/best")
     public List<ChargingStation> getBestChargingStations(@RequestBody GetBestChargingStationDto dto) {
         return chargingStationService.getBestChargingStations(dto);
     }
