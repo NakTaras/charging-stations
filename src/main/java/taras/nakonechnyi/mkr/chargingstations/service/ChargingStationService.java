@@ -136,19 +136,18 @@ public class ChargingStationService {
                         rand.nextInt(stationClassEnums.length)].getId())
                 .orElseThrow(() -> new RuntimeException("Station Class not found"));
 
-        var updatedChargingStation = ChargingStation.builder()
-                .modelName(dto.getModelName())
-                .description(dto.getDescription())
-                .price(dto.getPrice())
-                .purchaseLink(dto.getPurchaseLink())
-                .imageLink(dto.getImageLink())
-                .manufacturer(manufacturer)
-                .parameters(parameter)
-                .features(feature)
-                .stationClass(stationClass)
-                .build();
+        chargingStation.setModelName(dto.getModelName());
+        chargingStation.setDescription(dto.getDescription());
+        chargingStation.setPrice(dto.getPrice());
+        chargingStation.setPurchaseLink(dto.getPurchaseLink());
+        chargingStation.setImageLink(dto.getImageLink());
+        chargingStation.setManufacturer(manufacturer);
+        chargingStation.setParameters(parameter);
+        chargingStation.setFeatures(feature);
+        chargingStation.setStationClass(stationClass);
 
-        return chargingStationRepository.save(updatedChargingStation);
+
+        return chargingStationRepository.save(chargingStation);
     }
 
     @Transactional
